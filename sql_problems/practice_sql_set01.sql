@@ -29,3 +29,18 @@ ORDER BY SAL * 12 ASC;
 -- 9. Display the Empno, Ename, job, Hiredate, Exp (Experience) of all Mgrs 
 select empno, ename, job , hiredate, DATEDIFF(NOW() , hiredate)/(30*12) as experience_in_years
  from emp where empno in (select distinct mgr from emp);
+
+-- 10. List the Empno, Ename, Sal, Exp of all emps working for Mgr 7698
+select empno,ename,sal, DATEDIFF(NOW(), hiredate)/(30*12) from emp where  mgr=7698;
+
+-- 11. Display all the details of the emps whose Comm. Is more than their Sal.
+select * from emp where comm > sal;
+
+-- 12. List the emps in the asc order of Designations of those joined after the second half of 1981.
+select * from emp where hiredate > '1981-07-01' order by JOB asc;
+
+-- 13.List the emps along with their Exp and Daily Sal is more than Rs.100
+select * , DATEDIFF(NOW(),HIREDATE)/(30*12) as experience from emp where sal/30 > 100
+
+-- 14. List the emps who are either ‘CLERK’ or ‘ANALYST’ in the Desc order
+select * from emp where JOB in ('CLERK','ANALYST') order by JOB desc;
