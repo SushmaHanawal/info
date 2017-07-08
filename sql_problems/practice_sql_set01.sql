@@ -44,3 +44,30 @@ select * , DATEDIFF(NOW(),HIREDATE)/(30*12) as experience from emp where sal/30 
 
 -- 14. List the emps who are either ‘CLERK’ or ‘ANALYST’ in the Desc order
 select * from emp where JOB in ('CLERK','ANALYST') order by JOB desc;
+
+-- 15. List the emps who joined on 1-MAY-81,3-DEC-81,17-DEC-81,19-JAN-80 in asc order of seniority
+select * from emp where `HIREDATE` in ('1981-05-01','1981-12-03','1981-12-17','1980-12-1980') order by hiredate asc;
+
+-- 16. List the emp who are working for the Deptno 10 or20
+select * from emp where DEPTNO IN (10,20);
+
+select * from emp where DEPTNO = 10 or DEPTNO = 20;
+
+-- 17. List the emps who are joined in the year 81
+select * from emp where hiredate > '1981-01-01' and hiredate < '1981-12-31' ;
+
+select * from emp where hiredate BETWEEN '1981-01-01' and '1981-12-31' ;
+
+-- 18. List the emps who are joined in the month of Feb 1981
+select * from emp where hiredate BETWEEN '1981-02-01' and '1981-02-28' ;
+
+insert into emp values(7777, 'Michael','ANALYST',7566,'1981-03-01',3000,NULL,20);
+
+SELECT * FROM EMP
+WHERE HIREDATE BETWEEN '1981-02-01' AND '1981-03-01';
+
+-- 19. List the emps Who Annual sal ranges from 22000 and 45000
+select * from emp where sal*12 between 22000 and 45000;
+
+-- 20. List the Enames those are having five characters in their Names.
+select ENAME from emp where LENGTH(`ENAME`)=5;
