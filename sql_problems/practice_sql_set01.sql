@@ -71,3 +71,20 @@ select * from emp where sal*12 between 22000 and 45000;
 
 -- 20. List the Enames those are having five characters in their Names.
 select ENAME from emp where LENGTH(`ENAME`)=5;
+
+-- 21. List the Enames those are starting with ‘T’ and with five characters.
+select ENAME from emp where ename like 'T%' and LENGTH(`ENAME`)=5;
+
+-- 22. List the emps those are having four chars and third character must be ‘r’.
+select ENAME from emp where ename like '__r%' and LENGTH(`ENAME`)=4;
+
+-- 23. List the Five character names starting with ‘S’ and ending with ‘H’.
+select ENAME from emp where ename like 'S%' and ename like '%H' and LENGTH(`ENAME`)=5;
+
+-- 24. List the emps who joined in January.
+select * from emp where MONTH(HIREDATE)=01;
+
+-- 25. List the emps who joined in the month of which second character is ‘a’.
+select * from emp where MONTHNAME(HIREDATE) like '_a%';
+
+
