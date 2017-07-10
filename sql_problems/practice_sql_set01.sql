@@ -87,4 +87,7 @@ select * from emp where MONTH(HIREDATE)=01;
 -- 25. List the emps who joined in the month of which second character is ‘a’.
 select * from emp where MONTHNAME(HIREDATE) like '_a%';
 
-
+-- 26. List the emps whose Sal is four digit number ending with Zero
+SELECT * FROM EMP
+WHERE SAL BETWEEN 1000 and 10000
+AND CONVERT(SAL, CHAR) LIKE '%0.00';
