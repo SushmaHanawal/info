@@ -91,3 +91,26 @@ select * from emp where MONTHNAME(HIREDATE) like '_a%';
 SELECT * FROM EMP
 WHERE SAL BETWEEN 1000 and 10000
 AND CONVERT(SAL, CHAR) LIKE '%0.00';
+
+-- 27. List the EMPs whose names having a character set ‘ll’ together
+select * from emp where ename like '%ll%';
+
+-- 28. List the EMPs those who joined in 80’s
+select * from emp where hiredate like '1980%'
+
+select * from emp where year(hiredate) = 1980;
+
+-- 29. List the EMPs who does not belong to Deptno 20.
+select * from emp where deptno != 20;
+
+select * from emp where deptno <> 20;
+
+-- 30. List all the EMPs except ‘PRESIDENT’ & ‘MGR” in asc order of Salaries.
+select * from emp where job <> 'PREDIDENT, MGR' order by sal asc;
+
+select * from emp where job NOT IN ('PREDIDENT', 'MGR') order by sal asc;
+
+-- 31. List all the EMPs who joined before or after 1981
+
+select * from emp where year(hiredate) <> '1981' 
+
