@@ -114,3 +114,30 @@ select * from emp where job NOT IN ('PREDIDENT', 'MGR') order by sal asc;
 
 select * from emp where year(hiredate) <> '1981' 
 
+-- 32. List the EMPs whose Empno not starting with digit 78
+
+select * from emp where empno not like '78%'
+
+-- 33. List the EMPs who are working under ‘MGR’
+
+select e.ename , m.ename from emp e join emp m on e.mgr = m.empno;
+
+SELECT concat(e.ENAME,' works for ',m.ENAME)
+FROM EMP e, EMP m
+WHERE e.MGR = m.EMPNO;
+
+-- 34. List the EMPs who joined in any year but not belongs to the month of March
+
+select * from emp where MONTH(hiredate) != '03'
+
+select * from emp where MONTHNAME(hiredate) != 'MARCh'
+
+select * from emp where MONTH(hiredate) <> 3
+
+-- 35. List all the Clerks of Deptno 20.
+
+select * from emp where JOB = 'CLERK' and deptno=20
+
+-- 36. List the EMPs of Deptno 30 or 10 joined in the year 1981.
+select * from emp where deptno in (30, 10) and year(hiredate) = 1981
+
