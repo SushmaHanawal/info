@@ -141,3 +141,26 @@ select * from emp where JOB = 'CLERK' and deptno=20
 -- 36. List the EMPs of Deptno 30 or 10 joined in the year 1981.
 select * from emp where deptno in (30, 10) and year(hiredate) = 1981
 
+-- 37. Display the details of SMITH.
+select * from emp where ename = 'SMITH';
+
+-- 38. Display the location of  SMITH. (dept table is being used)
+select LOC from dept where deptno in (select deptno from emp where ename = 'SMITH');
+
+-- 39. List the total information of EMP table along with DNAME and Loc of all the EMPs Working Under ‘ACCOUNTING’ & ‘RESEARCH’ in the asc Deptno.
+select e.*, d.dname,d.loc from emp e inner join dept d on e.deptno = d.deptno where d.dname in ('ACCOUNTING','RESEARCH') ORDER BY E.DEPTNO ASC;
+
+select * from dept
+
+select * from emp 
+
+-- 40. List the Empno, Ename, Sal, Dname of all the ‘MGRS’ and ‘ANALYST’ working in New York, Dallas with an exp more than 7 years without receiving the Comm asc order of Loc
+
+
+select e.empno, e.ename,e.sal, d.dname from emp e inner join dept d on e.deptno = d.deptno where e.job in ('MANAGER','ANALYST') and d.`LOC` in ('NEW YORK','DALLAS')  and e.COMM is null and DATEDIFF(NOW(),e.HIREDATE)/(12*30) >7 order by d.loc asc;
+
+-- 41. Display the Empno, Ename, Sal, Dname, Loc, Deptno, Job of all EMPs working at CHICAGO or working for ACCOUNTING dept with Ann Sal>28000, but the Sal should not be=3000 or 2800 and who doesn’t belong to "MANAGER" and whose no is having a digit ‘7’ or ‘3’ in 3rd position in the asc order of Deptno and desc order of job.
+
+select e.empno, e.ename, e.sal, d.dname,d.loc, d.deptno, e.job from emp e inner join dept d on e.deptno = d.deptno 
+where (d.loc = 'CHICAGO' or  d.dname = 'ACCOUNTING')  and e.sal*12 > 28000 and e.sal NOT IN (3000, 2800) and e.JOB <> 'MANAGER' and (e.empno like '__7%' or e.empno like '__3%') order by e.deptno asc, e.job desc;
+
