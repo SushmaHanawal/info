@@ -61,3 +61,41 @@ select product_name from products where product_id in (select product_id from sa
 select p.product_name, s.quantity, s.year from products p inner join sales s 
 on p.product_id = s.product_id where s.quantity > 10;
 
+
+
+-- Q7: Write a query to find the products whose quantity sold in a year is greater than the average quantity of the product sold across all the years
+
+
+select p.product_name, s.year, s.quantity from products  p inner join
+ sales s on p.product_id = s.product_id inner join 
+(select product_id, sum(quantity)/count(quantity) as avg_qty from sales group by product_id) avg_sales
+on s.product_id = avg_sales.`PRODUCT_ID`
+where s.quantity > avg_sales.avg_qty;
+
+-- or
+
+SELECT p.PRODUCT_NAME, s.YEAR, s.QUANTITY
+FROM PRODUCTS p
+INNER JOIN SALES s ON p.PRODUCT_ID = s.PRODUCT_ID
+WHERE s.QUANTITY > (
+  SELECT sum(QUANTITY)/count(QUANTITY)
+  FROM SALES s2
+  WHERE s2.PRODUCT_ID = s.PRODUCT_ID
+);
+
+-- Q8: Write a query to compare the products sales of "IPhone" and "Samsung" in each year
+
+
+select ss.year, si.quantity as iphone_quantity, ss.quantity as samsung_quantity, si.price as iphone_price, ss.price as samsung_price
+from sales si, sales ss, products pi,  products ps
+where si.product_id = pi.product_id and ss.product_id = ps.product_id and pi.product_name='IPhone' and
+ps.product_name='Samsung' and ss.year= si.year; 
+
+-- Q9: Write a query to find the number of products sold in each year
+select year, count(product_id) from sales group by year
+
+-- or
+
+SELECT year, count(QUANTITY)
+from SALES
+GROUP BY year;
