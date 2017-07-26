@@ -164,3 +164,33 @@ select e.empno, e.ename,e.sal, d.dname from emp e inner join dept d on e.deptno 
 select e.empno, e.ename, e.sal, d.dname,d.loc, d.deptno, e.job from emp e inner join dept d on e.deptno = d.deptno 
 where (d.loc = 'CHICAGO' or  d.dname = 'ACCOUNTING')  and e.sal*12 > 28000 and e.sal NOT IN (3000, 2800) and e.JOB <> 'MANAGER' and (e.empno like '__7%' or e.empno like '__3%') order by e.deptno asc, e.job desc;
 
+-- 42. Display the total information of the EMPs along with Grades in the asc order (salgrade table is now used)
+
+select e.ename, e.sal, g.grade
+from emp e, salgrade g
+where e.sal between losal and hisal
+order by ename asc;
+
+-- 43. List all the Grade2 and Grade 3 EMPs.
+select e.*, s.grade from emp e, salgrade s where e.sal between s.losal and s.hisal AND s.grade in (2,3); 
+
+-- 44. Display all Grade 4,5 Analyst and Mgr.
+select e.*, s.grade from emp e, salgrade s where s.grade in (4,5) and e.sal between s.losal and s.hisal AND e.job in ('ANALYST','MANAGER');
+
+-- 45. List the Empno, Ename, Sal, Dname, Grade, Exp, and Ann Sal of EMPs working for Dept 10 or 20
+select e.empno as EMPNO, e.ename as ENAME,e.sal as ESALARY, d.dname as DNAME, s.grade as EGRADE, DATEDIFF(NOW(), hiredate)/12*30 as EEXP , e.sal *12 as EASALARY
+from salgrade s , emp e inner join dept d on e.deptno = d.`DEPTNO` 
+where d.`DEPTNO` in (10,20) AND
+e.sal between s.losal and s.hisal;
+
+-- 46. List all the information of EMP with Loc and the Grade of all the EMPs belong to the Grade range from 2 to 4 working at the Dept those are not starting with char set ‘OP’ and not ending with ‘S’ with the designation having a char ‘a’ any where joined in the year 1981 but not in the month of Mar or Sep and Sal not end with ‘00’ in the asc order of Grades
+
+select e.*, d.loc  as LOCATION, d.dname as DEPT_NAME, s.grade as GRADE from emp e inner join dept d on e.deptno = d.deptno, salgrade s 
+where e.sal between s.losal and s.hisal 
+AND s.grade in (2,4) 
+AND d.dname NOT like 'OP%S'  
+AND e.job like '%A%'
+AND year(hiredate) = 1981
+AND MONTH(hiredate) NOT IN (03,09)
+AND e.sal NOT LIKE '%0.%'
+order by s.grade asc;
