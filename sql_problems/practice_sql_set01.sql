@@ -194,3 +194,38 @@ AND year(hiredate) = 1981
 AND MONTH(hiredate) NOT IN (03,09)
 AND e.sal NOT LIKE '%0.%'
 order by s.grade asc;
+
+-- 47. List the details of the Depts along with Empno, Ename or without the EMPs
+
+select * from dept
+
+select * from emp
+
+select d.*, e.empno,e.ename from dept d left join emp e on d.deptno = e.deptno;
+
+-- 48. List the details of the EMPs whose Salaries more than the EMPloyee BLAKE.
+
+SELECT * FROM EMP WHERE SAL > (select sal from emp where ename = 'BLAKE')
+-- FOR COMPARISON BELOW
+-- UNION
+-- SELECT * FROM EMP WHERE ENAME='BLAKE'
+
+-- 49. List the EMPs whose Jobs are same as ALLEN.
+select * from emp where job in (select job from emp where ename='ALLEN');
+
+-- 50. List the EMPs who are senior to King.
+select * from  emp where hiredate < (select hiredate from emp where ename='KING')
+UNION
+select * from emp where ename='KING';
+
+-- 51. List the Emps who are senior to their own MGRS.
+
+select e.*, m.ename as manager_name, m.hiredate as manager_hiredate from emp e  inner join emp m on  e.mgr = m.empno  where e.hiredate < m.hiredate;
+
+-- or
+
+SELECT e1.EMPNO, e1.ENAME, e1.HIREDATE
+FROM EMP e1 WHERE e1.HIREDATE < (
+  SELECT HIREDATE FROM EMP e2 WHERE e2.EMPNO = e1.MGR
+)
+ORDER BY e1.EMPNO ASC;
