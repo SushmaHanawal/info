@@ -45,3 +45,56 @@ After half an hour, the first one burns completely and at this point of time,
 he will burn the other end of the second rope so now it will take 15 mins more 
 to completely burn. so total time is 30+15 i.e. 45mins.
 
+4. Heaven or Hell Puzzle
+
+You are standing before two doors. One of the path leads to heaven and the other 
+one leads to hell. There are two guardians, one by each door. 
+You know one of them always tells the truth and the other always lies, but you don’t 
+know who is the honest one and who is the liar.
+
+You can only ask one question to one of them in order to find the way to heaven. 
+What is the question?
+
+
+Puzzle Solution:
+The question you should ask is “If I ask the other guard about which side leads to heaven,
+ what would he answer?”. It should be fairly easy to see that irrespective of whom do you
+ask this question, you will always get an answer which leads to hell. 
+So you can chose the other path to continue your journey to heaven.
+
+5. 10 Coins Puzzle
+
+Problem: You are blindfolded and 10 coins are place in front of you on table. 
+You are allowed to touch the coins, but can’t tell which way up they are by feel. 
+You are told that there are 5 coins head up, and 5 coins tails up but not which ones 
+are which. How do you make two piles of coins each with the same number of heads up? 
+You can flip the coins any number of times.	
+
+Solution:
+
+Make 2 piles with equal number of coins. Now, flip all the coins in one of the pile.
+
+How this will work? lets take an example.
+
+So initially there are 5 heads, so suppose you divide it in 2 piles.
+
+Case:
+
+P1 : H H T T T
+P2 : H H H T T
+
+Now when P1 will be flipped
+P1 : T T H H H
+
+P1(Heads) = P2(Heads)
+
+Another case:
+
+P1 : H T T T T
+P2 : H H H H T
+
+Now when P1 will be flipped
+P1 : H H H H T
+
+P1(Heads) = P2(Heads)
+
