@@ -229,3 +229,58 @@ FROM EMP e1 WHERE e1.HIREDATE < (
   SELECT HIREDATE FROM EMP e2 WHERE e2.EMPNO = e1.MGR
 )
 ORDER BY e1.EMPNO ASC;
+
+-- 52. List the Emps of Deptno 20 whose Jobs are same as Deptno 10.
+
+select * from emp where deptno = 20 and job in (select job from emp where deptno = 10);
+
+-- using joins, we have the following:
+SELECT e20.JOB, e20.ENAME, e20.DEPTNO, e10.DEPTNO, e10.ENAME, e10.JOB
+FROM EMP e10, EMP e20
+WHERE e20.DEPTNO = 20
+  AND e10.DEPTNO = 10
+  AND e10.JOB = e20.JOB
+AND e10.EMPNO <> e20.EMPNO;
+
+
+-- 53. List the Emps whose Sal is same as FORD or SMITH in desc order of Sal.
+select * from emp;
+
+select * from dept;
+
+select * from emp 
+where sal in 
+(select sal from emp where ename in ('FORD','SMITH'))
+ AND ename not in ('FORD','SMITH');
+
+-- 54. List the EMPs Whose Jobs are same as MILLER or Sal is more than ALLEN.
+select * from emp where (job in (select job from emp where ename='MILLER') and ename!='MILLER')
+OR
+sal > (select sal from emp where ename='ALLEN');
+
+-- or
+
+SELECT ENAME, SAL
+FROM EMP
+WHERE JOB in (
+  SELECT JOB FROM EMP WHERE ENAME = 'MILLER'
+)
+OR SAL > (
+  SELECT SAL FROM EMP WHERE ENAME = 'ALLEN'
+);
+
+-- 55. List the Emps whose Sal is > the total remuneration of the SALESMAN.
+
+select * from emp where sal > (select sum(sal + COALESCE(COMM, 0)) from emp where job='SALESMAN');
+
+-- 56. List the EMPs who are senior to BLAKE working at CHICAGO & BOSTON.
+select e1.* from emp e1, emp e2 where e1.hiredate < e2.hiredate and e2.ename='BLAKE' and e1.deptno in (select deptno from dept where loc in ('CHICAGO','BOSTON'));
+
+-- or
+
+SELECT d.LOC, e.ENAME, e.HIREDATE FROM EMP e
+INNER JOIN DEPT d on e.DEPTNO = d.DEPTNO
+WHERE d.LOC IN ('CHICAGO', 'BOSTON')
+AND e.HIREDATE < (
+  SELECT HIREDATE FROM EMP WHERE ENAME = 'BLAKE'
+);
