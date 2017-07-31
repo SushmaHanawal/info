@@ -284,3 +284,33 @@ WHERE d.LOC IN ('CHICAGO', 'BOSTON')
 AND e.HIREDATE < (
   SELECT HIREDATE FROM EMP WHERE ENAME = 'BLAKE'
 );
+
+-- 57. List the Emps of Grade 3,4 belongs to the dept ACCOUNTING and RESEARCH whose Sal is more than ALLEN and exp more than ADAMS in the asc order of EXP.
+
+select * from emp e inner join dept d on e.deptno = d.deptno , salgrade s 
+where s.grade in (3,4) AND e.sal between s.losal and s.hisal AND e.deptno in (select deptno from dept where dname in ('ACCOUNTING','RESEARCH'))
+AND e.sal > (select sal from emp where ename='ALLEN') AND e.HIREDATE < (SELECT hiredate from emp where ename='ADAMS') order by e.hiredate asc;
+
+-- 58. List the EMPs whose jobs same as SMITH or ALLEN.
+select e1.* from emp e1, emp e2 where e2.ename in ('SMITH','ALLEN') and e1.job = e2.job and e1.ename not in ('SMITH','ALLEN') ; 
+
+-- or
+
+select * from emp where job in (select job from emp where ename in ('SMITH','ALLEN') ) and ename not in ('SMITH','ALLEN');
+
+-- 59. Write a Query to display the details of EMPs whose Sal is same as of
+--    a)Employee Sal of EMP1 table.
+--    b)¾ Sal of any Mgr of EMP2 table.
+--    c)The sal of any person with exp of 5 years belongs to the sales dept of EMP3 table.
+--    d)Any grade 2 EMPloyee of EMP4 table.
+--    e)Any grade 2 and 3 EMPloyee working fro sales dept or operations dept joined in 89.
+
+-- 60. SELECT any jobs of deptno 10 those that are not found in deptno 20
+
+select job from emp where deptno = 10 and job not in (select job from emp where deptno=20);
+
+-- 61. List of EMPs of EMP1 who are not found in EMP2.
+select * from emp e1 where e1.empno not in (select e2.empno from emp e2);
+
+-- 62. Find the highest sal of EMP table.
+select max(sal) as highest_salary from emp;
