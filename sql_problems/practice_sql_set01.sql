@@ -314,3 +314,61 @@ select * from emp e1 where e1.empno not in (select e2.empno from emp e2);
 
 -- 62. Find the highest sal of EMP table.
 select max(sal) as highest_salary from emp;
+
+-- 63. Find the details of highest paid EMPloyee
+select e.* from emp e where sal in (select max(sal) from emp);
+
+-- 64. Find the highest paid EMPloyee of sales department.
+select * from emp
+select * from dept
+select e.* from emp e where sal in (select max(sal) from emp e1 inner join dept d1 on e1.deptno = d1.deptno AND d1.dname='SALES');
+
+-- or
+
+SELECT * FROM EMP WHERE SAL IN (
+  SELECT MAX(SAL) FROM EMP WHERE DEPTNO = (
+    SELECT DEPTNO FROM DEPT WHERE DNAME = 'SALES'
+  )
+);
+
+-- 65. List the most recently hired EMP of grade3 belongs to  location CHICAGO.
+-- The query is not perfect
+
+select e1.ename, inn.hiredate from  (select max(e.hiredate) as hiredate, d.loc as location, s.grade from emp e inner join dept d on e.deptno = d.deptno, salgrade s where d.loc='CHICAGO'  AND s.grade=3  AND e.SAL BETWEEN s.LOSAL AND s.HISAL group by d.loc, s.grade) inn inner join  dept d1 on inn.location = d1.loc , emp e1 where inn.hiredate = e1.hiredate
+;
+
+-- or
+
+SELECT *
+FROM EMP
+WHERE HIREDATE = (
+  SELECT MAX(HIREDATE)
+  FROM EMP e, SALGRADE s, DEPT d
+  WHERE e.DEPTNO = d.DEPTNO
+  AND d.LOC = 'CHICAGO'
+  AND e.SAL BETWEEN s.LOSAL AND s.HISAL
+  AND s.GRADE = 3
+);
+
+-- 66. List the EMPloyees who are senior to most recently hired EMPloyee working under king.
+SELECT *
+FROM EMP
+WHERE HIREDATE < (
+  SELECT MAX(e1.HIREDATE)
+  FROM EMP e1, EMP e2 where e1.mgr = e2.empno and e2.ename = 'KING' 
+);
+
+-- or
+
+SELECT * FROM EMP WHERE HIREDATE < (
+  SELECT MAX(HIREDATE)
+  FROM EMP
+  WHERE MGR = (
+    SELECT EMPNO FROM EMP WHERE ENAME = 'KING'
+  )
+);
+
+-- 67. to be done
+
+-- 68. List the details of the senior EMPloyee belongs to 1981.
+select * from emp where hiredate in (select min(hiredate) from emp where year(hiredate) = 1981); 
