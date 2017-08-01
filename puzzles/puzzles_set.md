@@ -143,3 +143,22 @@ After four weeks, line the prisoners up in their bit order and read each living 
 1000 is less than 1024 (2^10). If there were 1024 or more bottles of wine it would take 
 more than 10 prisoners.
 
+7. 3 Mislabeled Jars
+
+Puzzle:
+
+This problem is also called Jelly Beans problem. This is the most commonly asked interview puzzle.
+
+You have 3 jars that are all mislabeled. One jar contains Apple, another contains Oranges and the third jar contains a mixture of both Apple and Oranges.
+
+You are allowed to pick as many fruits as you want from each jar to fix the labels on the jars. What is the minimum number of fruits that you have to pick and from which jars to correctly label them?
+
+Labels on jars are as follows:
+
+Solution:
+
+The important thing to note here is that all the three Jars are MISLABELED. Hence a jar labelled Apples can contain either only Oranges or Apples+Oranges, Similarly a jar labelled Apples & Oranges must contain either only Apples or only Oranges.
+Step 1 : Take out a fruit from the jar mislabelled as Apples & Oranges, If it turns out to be an Orange then this jar must contain Oranges only.
+Step 2 : Consider the Jar labelled as Apples, Since the Jar is mislabeled it cannot contain Apples and also the jar which contains oranges is already found. Hence we can conclude that this jar contains apples & Oranges .
+you know the rest .
+
