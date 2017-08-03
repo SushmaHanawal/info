@@ -372,3 +372,44 @@ SELECT * FROM EMP WHERE HIREDATE < (
 
 -- 68. List the details of the senior EMPloyee belongs to 1981.
 select * from emp where hiredate in (select min(hiredate) from emp where year(hiredate) = 1981); 
+
+
+-- 69. List the EMPloyees who joined in 1981 with the job same as the most senior person of the year 1981.
+select * from emp where   job in (select job from emp where hiredate in (select min(hiredate) from emp where hiredate like '1981%')) AND year(hiredate) = 1981;
+
+-- 70. List the most senior EMPl working under the king and grade is more  than 3.
+select * from salgrade
+
+select e1.* from emp e1 inner join emp e2 on e1.mgr = e2.empno ,  salgrade s 
+where  e2.ename='KING' AND s.grade > 3 AND e1.sal between s.losal and s.hisal 
+AND e1.hiredate in (select min(hiredate) from `EMP` e3 where e3.mgr = e1.mgr);
+
+-- or
+
+SELECT * FROM EMP e, SALGRADE s
+WHERE e.SAL BETWEEN s.LOSAL AND s.HISAL
+AND s.GRADE > 3
+AND e.MGR = (
+  SELECT EMPNO FROM EMP WHERE ENAME = 'KING'
+)
+AND e.HIREDATE IN (
+  SELECT MIN(HIREDATE)
+  FROM EMP WHERE MGR = e.MGR
+);
+
+-- 71. Find the total sal given to the MGR.
+select sum(sal) from emp where job='MANAGER'; 
+
+-- 72. Find the total annual sal to distribute job wise in the year 81.
+SELECT SUM(SAL) *12 AS ANNUAL_SALARY, JOB FROM EMP WHERE YEAR(HIREDATE)= 1981 GROUP BY JOB
+
+-- 73. Display total sal of the EMPloyees belonging to grade 3.
+select sum(e.sal) from emp e, salgrade s where e.sal between s.losal and s.hisal AND s.grade=3
+
+-- or
+
+SELECT SUM(e.SAL), s.GRADE
+FROM EMP e, SALGRADE s
+WHERE e.SAL BETWEEN s.LOSAL AND s.HISAL
+AND s.GRADE = 3
+GROUP BY s.GRADE;
