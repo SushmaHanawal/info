@@ -413,3 +413,32 @@ FROM EMP e, SALGRADE s
 WHERE e.SAL BETWEEN s.LOSAL AND s.HISAL
 AND s.GRADE = 3
 GROUP BY s.GRADE;
+
+-- 74. Display the average salaries of all the clerks.
+select * from emp
+
+select avg(sal) from emp where job='CLERK'
+
+-- 75. List the EMPloyees in dept 20 whose sal is > than the average sal 0f dept 10 EMPs.
+select * from emp where deptno = 20 and sal > (select avg(sal) from emp where deptno = 10);
+
+-- 76. Display the number of EMPloyee  for each job group deptno wise.
+select count(empno) , job, `DEPTNO`  from emp group by job, deptno;
+
+-- 77. List the manager no and the number of EMPloyees working for those mgrs in the ascending Mgrno.
+-- First we need to figure out who works for whom. So we need 2 EMP tables where MGR of one
+-- table matches the EMPNO of the other table. That gives us the relationship.
+
+SELECT count(EMPloyee.EMPNO) as COUNT, manager.EMPNO as MGR
+FROM EMP EMPloyee, EMP manager
+WHERE EMPloyee.MGR = manager.EMPNO
+GROUP BY manager.EMPNO
+ORDER BY manager.EMPNO;	
+
+-- 78. List the department,details where at least two EMPs are working
+
+select e.deptno, count(e.deptno) from dept d inner join emp e on d.deptno = e.deptno group by e.deptno having count(e.deptno) > 2; 
+
+-- the below query gives details of dept
+
+select e.deptno, d.dname, d.loc, count(e.deptno) from dept d inner join emp e on d.deptno = e.deptno group by e.deptno, d.dname, d.loc having count(e.deptno) > 2; 
