@@ -442,3 +442,20 @@ select e.deptno, count(e.deptno) from dept d inner join emp e on d.deptno = e.de
 -- the below query gives details of dept
 
 select e.deptno, d.dname, d.loc, count(e.deptno) from dept d inner join emp e on d.deptno = e.deptno group by e.deptno, d.dname, d.loc having count(e.deptno) > 2; 
+
+-- 79. Display the Grade, Number of EMPs, and max sal of each grade.
+select grade, count(empno), max(sal) from emp, salgrade where sal between losal and hisal group by grade;
+
+-- 80. Display dname, grade, No. of EMPs where at least two EMPs are clerks.
+select d.dname as DEPT_NAME, s.grade as GRADE, count(e.empno) as NO_OF_EMP from  emp e inner join dept d on e.deptno = d.deptno, 
+salgrade s where e.sal between s.losal and s.hisal AND e.job='CLERK'  group by d.dname, s.grade having count(e.empno) >= 2;
+
+-- or
+
+SELECT d.DNAME, s.GRADE, COUNT(e.EMPNO)
+FROM EMP e, SALGRADE s, DEPT d
+WHERE e.SAL BETWEEN s.LOSAL AND s.HISAL
+AND e.DEPTNO = d.DEPTNO
+AND e.JOB = 'CLERK'
+GROUP BY d.DNAME, s.GRADE
+HAVING count(e.EMPNO) >= 2;
