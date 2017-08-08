@@ -459,3 +459,42 @@ AND e.DEPTNO = d.DEPTNO
 AND e.JOB = 'CLERK'
 GROUP BY d.DNAME, s.GRADE
 HAVING count(e.EMPNO) >= 2;
+
+-- 81. List the details of the department where maximum number of EMPs are working.
+select * from dept where deptno in
+(
+select deptno from emp group by deptno having count(empno) =(
+select max(A.EMP_COUNT) from 
+(select count(empno) as EMP_COUNT from emp group by deptno) A))
+
+-- 82. Display the EMPs whose manager name is jones.
+select e1.* from emp e1, emp e2 where e1.mgr = e2.empno AND e2.ename='JONES';
+
+-- or 
+
+SELECT * FROM EMP
+WHERE MGR IN (
+    SELECT EMPNO FROM EMP WHERE ENAME = 'JONES'
+);
+
+-- 83. List the EMPloyees whose salary is more than 3000 after giving 20% increment.
+select * from emp where empno in (select empno from emp where (sal + (20/100 * sal)) > 3000 )
+
+-- or
+select * from emp where (sal + (20/100 * sal)) > 3000 ;
+
+-- or
+
+SELECT * FROM EMP
+WHERE SAL * 1.2 > 3000;
+
+-- 84. List the EMPs with dept names.
+select e.*, d.dname from emp e inner join dept d on e.deptno = d.deptno;
+
+-- 85. List the EMPs who are not working in sales dept.
+select * from emp where deptno not in (select deptno from dept where dname='SALES');
+
+-- or
+
+select e.* from emp e inner join dept d on e.deptno = d.deptno where d.dname <> 'SALES';
+
