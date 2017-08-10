@@ -498,3 +498,23 @@ select * from emp where deptno not in (select deptno from dept where dname='SALE
 
 select e.* from emp e inner join dept d on e.deptno = d.deptno where d.dname <> 'SALES';
 
+-- 86. List the EMPs name ,dept, sal and comm. For those whose salary is between 2000 and 5000 while loc is Chicago.
+select e.ENAME, d.dname, e.sal, e.comm from emp e inner join dept d on e.deptno = d.deptno 
+where sal between 2000 and 5000 
+AND d.loc='CHICAGO';
+
+-- 87. List the EMPs whose sal is greater than his managers salary
+select e1.* from emp e1, emp e2
+where e1.mgr = e2.empno
+AND e1.sal >e2.sal;
+
+-- or
+
+SELECT
+  e.ENAME AS EMPloyee,
+  e.SAL   AS EMP_sal,
+  m.ENAME AS manager,
+  m.SAL   AS manager_sal
+FROM EMP e
+  INNER JOIN EMP m ON e.MGR = m.EMPNO
+WHERE e.SAL >= m.SAL;
