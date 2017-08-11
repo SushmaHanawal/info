@@ -518,3 +518,48 @@ SELECT
 FROM EMP e
   INNER JOIN EMP m ON e.MGR = m.EMPNO
 WHERE e.SAL >= m.SAL;
+
+
+-- 88. List the grade, EMP name for the deptno 10 or deptno 30 but sal grade is not 4 while they joined the company before ’31-dec-82’.
+select s.grade, e.ename from emp e inner join dept d on e.deptno = d.deptno,
+salgrade s where d.deptno in (10,30)
+AND s.grade != 4 AND e.sal between s.losal and s.hisal
+AND e.hiredate < '31-DEC-1982'; 
+
+-- or
+
+SELECT s.GRADE, e.ENAME, e.DEPTNO, e.HIREDATE
+FROM EMP e, SALGRADE s
+WHERE e.DEPTNO IN (10, 30)
+AND e.SAL BETWEEN s.LOSAL and s.HISAL
+AND s.GRADE <> 4
+and e.HIREDATE < '1982-12-31';
+
+-- 89. List the name ,job, dname, location for those who are working as MGRS.
+SELECT e.ENAME, e.JOB, d.DNAME, d.LOC
+FROM EMP e
+  INNER JOIN DEPT d ON e.DEPTNO = d.DEPTNO
+WHERE e.EMPNO IN (
+  SELECT DISTINCT MGR FROM EMP
+);
+
+-- 90. List the EMPs whose mgr name is jones and also list their manager name.
+SELECT E1.* FROM EMP E1 INNER JOIN EMP E2 ON E1.MGR = E2.EMPNO 
+WHERE E2.ENAME='JONES' 
+
+-- or
+
+SELECT e.ENAME as "EMPLOYEE", m.ENAME as "MANAGER"
+FROM EMP e
+  INNER JOIN EMP m on e.MGR = m.EMPNO
+WHERE m.ENAME = 'JONES';
+
+-- 91. List the name and salary of FORD if his salary is equal to hisal of his grade.
+select e.ename, e.sal from emp e , salgrade s where e.ename='FORD' AND e.sal = s.hisal
+
+SELECT e.ENAME, e.SAL, s.HISAL
+FROM EMP e, SALGRADE s
+WHERE e.SAL BETWEEN s.LOSAL and s.HISAL
+AND e.SAL = s.HISAL
+
+select e.ename, e.sal from emp e , salgrade s where  e.sal = s.hisal
