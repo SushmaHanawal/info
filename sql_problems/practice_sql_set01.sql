@@ -563,3 +563,30 @@ WHERE e.SAL BETWEEN s.LOSAL and s.HISAL
 AND e.SAL = s.HISAL
 
 select e.ename, e.sal from emp e , salgrade s where  e.sal = s.hisal
+
+-- 92. List the name, job, dname ,sal, grade order dept wise
+select e.ename, e.job, d.dname, e.sal, s.grade from emp e inner join dept d on e.deptno = d.deptno,
+salgrade s where e.sal between s.losal and s.hisal
+order by d.dname asc;
+
+-- or
+
+SELECT e.ENAME, e.JOB, d.DNAME, e.SAL, s.GRADE
+FROM EMP e, SALGRADE s, DEPT d
+WHERE e.DEPTNO = d.DEPTNO
+AND e.SAL BETWEEN s.LOSAL AND s.HISAL
+ORDER BY e.DEPTNO DESC;
+
+-- 93. List the EMP name, job, sal, grade and dname except clerks and sort on the basis of highest sal.
+select e.ename, e.job, e.sal, s.grade , d.dname from emp e inner join dept d on e.deptno = d.`DEPTNO`,
+salgrade s where e.job <> 'CLERK' AND e.sal between s.losal and s.hisal
+order by e.sal desc;
+
+-- 94. List the EMPs name, job  who are with out manager.
+
+select ename, job from emp where mgr is NULL;
+
+-- 94.2 List the manager who does not have any EMPloyees below him
+SELECT m.ENAME, m.EMPNO, e.ename, e.empno
+FROM EMP m LEFT JOIN EMP e on m.EMPNO = e.MGR
+where e.empno is null;
