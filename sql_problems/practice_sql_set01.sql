@@ -590,3 +590,44 @@ select ename, job from emp where mgr is NULL;
 SELECT m.ENAME, m.EMPNO, e.ename, e.empno
 FROM EMP m LEFT JOIN EMP e on m.EMPNO = e.MGR
 where e.empno is null;
+
+-- 95. List the names of the EMPs who are getting the highest sal dept wise.
+select e.ename, d.dname, e.sal from emp e inner join dept d 
+on e.deptno = d.deptno 
+where e.sal in (select  max(sal)  from emp group by deptno );
+
+-- 96. List the EMPs whose sal is equal to the average of max and minimum SAL
+select * from emp where sal in (select (max(sal) + min(sal))/2 from emp)
+
+-- 96.2 List the EMPs whose sal is equal to the average SAL or minimum SAL
+select * from emp where sal in (select avg(sal) from emp) or sal in (select min(sal) from emp)
+
+-- 97. List the no. of EMPs in each department where the no. is more than 3
+ (select deptno, count(empno) as NO_OF_EMP from emp group by deptno having count(empno) > 3)
+ 
+ -- 98. List the names of depts. Where at least 3 EMPs are working in that department.
+ select d.dname from dept d inner join emp e on d.deptno = e.deptno group by d.dname having count(e.empno)>2
+ 
+-- or
+
+SELECT d.DNAME
+FROM DEPT d WHERE d.DEPTNO IN (
+  SELECT DEPTNO
+  FROM EMP
+  GROUP BY DEPTNO
+  HAVING COUNT(EMPNO) >= 3
+);
+ 
+ -- 99. List the managers whose sal is more than his EMPloyees avg salary. 
+ select * from emp where empno in (select distinct mgr from emp) AND sal > (select avg(e.sal) from emp e, emp m where e.mgr = m.empno)
+ 
+ -- or
+ 
+ SELECT (avg(e.sal)), m.ename
+FROM EMP e, EMP m
+WHERE e.mgr = m.EMPno
+GROUP BY e.mgr, m.ename;
+
+-- 100. List the name,salary,comm. for those EMPloyees whose net pay is greater than or equal to any other EMPloyee salary of the company.
+select ename, sal, comm from emp where (sal + comm) >= ANY(select sal from emp)
+
