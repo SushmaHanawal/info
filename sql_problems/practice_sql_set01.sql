@@ -631,3 +631,13 @@ GROUP BY e.mgr, m.ename;
 -- 100. List the name,salary,comm. for those EMPloyees whose net pay is greater than or equal to any other EMPloyee salary of the company.
 select ename, sal, comm from emp where (sal + comm) >= ANY(select sal from emp)
 
+-- 101. List the EMP whose sal is less than his manager but more than any other manager.
+SELECT e.ENAME as EMP_NAME, e.SAL, m.ENAME as MANAGER, m.SAL
+FROM EMP e
+  INNER JOIN EMP m on e.MGR = m.EMPNO
+WHERE e.SAL < m.SAL
+and e.SAL > ANY (
+  SELECT SAL FROM EMP WHERE EMPNO IN (
+    SELECT DISTINCT MGR FROM EMP
+  )
+);
