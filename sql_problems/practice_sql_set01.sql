@@ -641,3 +641,51 @@ and e.SAL > ANY (
     SELECT DISTINCT MGR FROM EMP
   )
 );
+
+-- 102. List the EMPloyee names and his average salary department wise.
+SELECT e.ENAME, e.DEPTNO, AVG_SAL
+FROM EMP e, (
+  SELECT AVG(SAL)as AVG_SAL, DEPTNO
+  FROM EMP
+  GROUP BY DEPTNO
+) A, DEPT d
+WHERE e.DEPTNO = d.DEPTNO
+AND A.DEPTNO = e.DEPTNO;
+
+-- 103. Find out least 5 earners of the company.
+select * from emp order by sal asc LIMIT 5;
+
+-- or
+
+SELECT * FROM EMP e WHERE 5 > (
+  SELECT count(1)
+  FROM EMP
+  WHERE e.SAL > SAL
+);
+
+-- 104. Find out EMPs whose salaries are greater than salaries of their managers.
+select e.* from emp e inner join emp m on e.mgr = m.empno
+WHERE e.SAL > m.`SAL`
+
+-- OR
+
+SELECT e.ENAME as EMP_NAME, e.SAL as EMP_SAL, m.ENAME as MGR_NAME, m.SAL as MGR_SAL
+FROM EMP e, EMP m
+WHERE e.MGR = m.EMPNO
+AND e.SAL > m.SAL;
+
+-- 105. List the managers who are not working under the president.
+
+select * from EMP 
+where EMPNO IN (SELECT DISTINCT MGR FROM EMP)
+AND MGR NOT IN (SELECT EMPNO FROM EMP WHERE JOB='PRESIDENT')
+
+-- or
+
+SELECT e.ENAME, m.ENAME, m.JOB
+FROM EMP e, EMP m
+WHERE e.MGR = m.EMPNO
+AND e.EMPNO IN (
+  SELECT DISTINCT MGR FROM EMP
+)
+AND m.JOB <> 'PRESIDENT';
