@@ -689,3 +689,19 @@ AND e.EMPNO IN (
   SELECT DISTINCT MGR FROM EMP
 )
 AND m.JOB <> 'PRESIDENT';
+
+-- 106. List the records from emp whose deptno is not in DEPT table.
+ INSERT INTO EMP VALUES ('7728', 'STEVE', 'SALESMAN', '7839', '1981-05-01', '2770.00', NULL, '60');
+ 
+ select * from emp where deptno not in (select deptno from dept);
+ 
+ -- 107. List the Name , Salary, Comm and Net Pay of an employee which is more than any other employee.
+ select ename, sal, comm, (sal+comm) as net_pay from EMP 
+ WHERE SAL > ANY(SELECT SAL FROM EMP);
+ 
+ -- or
+ 
+ SELECT e.ENAME, e.SAL, e.COMM, e.SAL + e.COMM as NET_PAY
+FROM EMP e WHERE SAL > ANY (
+  SELECT SAL FROM EMP
+);
