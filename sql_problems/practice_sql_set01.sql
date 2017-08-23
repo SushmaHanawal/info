@@ -705,3 +705,20 @@ AND m.JOB <> 'PRESIDENT';
 FROM EMP e WHERE SAL > ANY (
   SELECT SAL FROM EMP
 );
+
+-- 108. List the Enames who are retiring after 31-Dec-89 (the max Job period is 20Y).
+select ename from emp where DATE_ADD(hiredate ,INTERVAL 20 YEAR)  > '1989-12-31'
+
+-- or
+
+SELECT ENAME, HIREDATE, DATEDIFF('1989-12-31',HIREDATE)/(12 * 30) EXP_AT_1989
+FROM EMP
+-- WHERE DATEDIFF('1989-12-31',HIREDATE)/(12 * 30) > 20;
+WHERE date_add(HIREDATE, INTERVAL 20 YEAR) > '1989';
+
+-- 109. List those Emps whose Salary is odd value.
+select ename, sal, sal/2 from emp 
+where sal%2!= 0
+
+-- or 
+SELECT * FROM EMP WHERE SAL % 2 = 1;
