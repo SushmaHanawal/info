@@ -722,3 +722,10 @@ where sal%2!= 0
 
 -- or 
 SELECT * FROM EMP WHERE SAL % 2 = 1;
+
+-- 110. List the emp’s whose Salary contain 3 digits.
+select * from emp where sal > 100 AND sal < 1000;
+
+-- 111. List the emps who joined in the month of DEC.
+select * from emp where 
+month(hiredate) = 12;
