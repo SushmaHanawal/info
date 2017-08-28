@@ -729,3 +729,11 @@ select * from emp where sal > 100 AND sal < 1000;
 -- 111. List the emps who joined in the month of DEC.
 select * from emp where 
 month(hiredate) = 12;
+
+-- 112. List the emps whose names contains ‘A’.
+select * from emp where ename like '%A%'
+
+-- 113. List the emps whose Deptno is available in his Salary.
+SELECT CONVERT(SAL, CHAR),CONCAT('%',DEPTNO,'%')
+FROM EMP
+WHERE CONVERT(SAL, CHAR) LIKE CONCAT('%',DEPTNO,'%');
