@@ -737,3 +737,15 @@ select * from emp where ename like '%A%'
 SELECT CONVERT(SAL, CHAR),CONCAT('%',DEPTNO,'%')
 FROM EMP
 WHERE CONVERT(SAL, CHAR) LIKE CONCAT('%',DEPTNO,'%');
+
+-- 114. List the emps whose first 2 chars from Hiredate = last 2 characters of Salary.
+-- substr( column, position to start, length(how many characters to consider))
+SELECT ENAME, HIREDATE, SAL
+FROM EMP
+WHERE SUBSTR(HIREDATE, 1, 2) = SUBSTR(CONVERT(SAL,INT), LENGTH(SAL)-4 , LENGTH(SAL) - 2);
+
+-- 115. List the emps Whose 10% of Salary is equal to year of joining.
+SELECT ENAME, SAL, CONVERT(SAL * 0.1,INT), YEAR(HIREDATE)
+FROM EMP
+WHERE CONVERT(SAL*0.1,INT) = YEAR(HIREDATE);
+-- OR CONVERT(SAL * 0.1, INT) = SUBSTR(YEAR(HIREDATE),3,4);
