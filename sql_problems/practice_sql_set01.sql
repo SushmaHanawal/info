@@ -749,3 +749,10 @@ SELECT ENAME, SAL, CONVERT(SAL * 0.1,INT), YEAR(HIREDATE)
 FROM EMP
 WHERE CONVERT(SAL*0.1,INT) = YEAR(HIREDATE);
 -- OR CONVERT(SAL * 0.1, INT) = SUBSTR(YEAR(HIREDATE),3,4);
+
+-- 116. List first 50% of chars of Ename in Lower Case and remaining are upper Case.
+
+-- 117. List the Dname whose No. of Emps is = to number of chars in the Dname.
+select * from dept;
+
+select dname from dept  where length(dname) in (select count(ename) from emp group by deptno);
